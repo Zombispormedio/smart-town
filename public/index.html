@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ejemplo mapas</title>
+        <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+        <link rel="import" href="bower_components/google-map/google-map.html">
+        <link rel="import" href="bower_components/paper-slider/paper-slider.html">
+    </head>
+    <body>
+
+        <style>
+            google-map {
+                height: 600px;
+            }
+        </style>
+        <template is="dom-bind">
+            <google-map latitude="40.41" longitude="-3.7" fit-to-markers zoom="{{zoom}}">
+                <google-map-marker latitude="40.41" longitude="-3.7"
+                                   draggable="true" title="Go Giants!" animation="BOUNCE"></google-map-marker>
+
+            </google-map>
+
+            <paper-slider min="1" max="50" value="{{zoom}}"></paper-slider>
+        </template>
+
+
+
+
+
+        <hello-world></hello-world>
+        <script>
+            var prototype=Object.create(HTMLElement.prototype);
+            prototype.createdCallback=function(){
+                this.textContent="Hello World";
+            };
+
+            document.registerElement("hello-world", {prototype:prototype});
+        </script>
+    </body>
+</html>
