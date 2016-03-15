@@ -1,7 +1,7 @@
 {
-  "name": "pickyourday-admin",
+  "name": "smart-town",
   "version": "1.0.0",
-  "description": "pickyourday admin",
+  "description": "smart-town",
   "main": "server.js",
   "directories": {
     "test": "test"
@@ -26,13 +26,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Zombispormedio/pickyourday-admin.git"
+    "url": "git+https://github.com/Zombispormedio/smart-town.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Zombispormedio/pickyourday-admin/issues"
+    "url": "https://github.com/Zombispormedio/smart-town/issues"
   },
-  "homepage": "https://github.com/Zombispormedio/pickyourday-api#readme"
+  "homepage": "https://github.com/Zombispormedio/smart-town#readme"
 }
