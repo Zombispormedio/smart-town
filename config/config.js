@@ -20,7 +20,7 @@ var config = Object.create(Config.prototype, {
  config: secure_path("config/"),
     root: secure(rootPath),
  
-    port:secure(process.env.PORT || 5080)
+    port:secure(process.env.PORT || 5093)
 });
 
 
