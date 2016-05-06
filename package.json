@@ -12,12 +12,24 @@
     "bower": "1.6.8",
     "cors": "2.7.1",
     "express": "4.0.0",
-  
     "method-override": "1.0.2",
-
     "morgan": "1.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "del": "2.2.0",
+    "gulp": "3.9.1",
+    "gulp-concat": "2.6.0",
+    "gulp-html-extract": "0.1.0",
+    "gulp-load-plugins": "1.2.2",
+    "gulp-minify-css": "1.2.4",
+    "gulp-minify-html": "1.0.6",
+    "gulp-rename": "1.2.2",
+    "gulp-size": "2.1.0",
+    "gulp-sourcemaps": "2.0.0-alpha",
+    "gulp-uglify": "1.5.3",
+    "gulp-vulcanize": "6.1.0",
+    "vulcanize": "1.14.8"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",

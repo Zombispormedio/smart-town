@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Smart Town</title>
+
+
+        <link rel="stylesheet" href="styles/main.css">
+
+        <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+        <link rel="import" href="elements/elements.html">
+
+
+        <style is="custom-style" include="shared-styles"></style>
+    </head>
+
+    <body unresolved>
+
+        <template is="dom-bind" id="app">
+            <!-- Main Area -->
+            <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
+                <!-- Main Toolbar -->
+
+                <paper-toolbar id="mainToolbar" class="tall" bottom-justify="center" middle-justify="center">
+                   <div class="top top-container">
+                        <iron-image id="mainLogo" src="assets/images/house_with_garden_36.png"></iron-image>
+                        <span class="flex"></span>
+                        
+                        <paper-button raised class="custom yellow">Get Your Api Key</paper-button>
+                        
+                   </div>
+                   
+
+
+                    <div class="middle middle-container">
+                        <div class="app-name">Smart Town</div>
+                    </div>
+
+                    <!-- Application sub title -->
+                    <div class="bottom bottom-container">
+                        <div class="bottom-title">The future of Smart Cities</div>
+                    </div>
+                </paper-toolbar>
+
+
+                <!-- Main Content -->
+                <div class="content">
+                    <iron-pages attr-for-selected="data-route" selected="home">
+                        <section data-route="home" tabindex="-1">
+                            <paper-material elevation="1">
+                                <my-greeting></my-greeting>
+
+                                <p class="subhead">You now have:</p>
+                                <my-list></my-list>
+
+                                <p>Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/">preview</a> them live.</p>
+                            </paper-material>
+
+                            <paper-material elevation="1">
+                                <p>This is another card.</p>
+                            </paper-material>
+
+                            <paper-material elevation="1">
+                                <h2 id="license">License</h2>
+
+                            </paper-material>
+                        </section>
+                    </iron-pages>
+                </div>
+            </paper-scroll-header-panel>
+
+
+        </template>
+
+
+        <script src="scripts/app.js"></script>
+
+    </body>
+
+</html>
