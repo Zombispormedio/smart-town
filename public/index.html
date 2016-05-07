@@ -21,9 +21,12 @@
 
     <body unresolved>
 
+
+
         <template is="dom-bind" id="app">
 
-            <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
+
+            <paper-scroll-header-panel id="headerPanelMain" condenses keep-condensed-header>
 
                 <paper-toolbar id="mainToolbar" class="tall" bottom-justify="center" middle-justify="center">
                     <div class="top top-container flex-horizontal">
@@ -34,24 +37,24 @@
 
                         <div class="flex"></div>
 
-                        <template is="dom-if" if="{{route !== 'developer'}}">
+                        <element-if result="developer" value="[[route]]">
                             <paper-button raised class="buttonToolbar yellow">
                                 <a href="{{baseUrl}}developer">  Get Your Api Key</a>
 
                             </paper-button>
-                        </template>
-
+                        </element-if>
 
                     </div>
 
-                    <div class="middle middle-container">
-                        <div class="app-name">Smart Town</div>
+                    <div id="mainTitleContainer" class="middle middle-container">
+                        <div id="mainTitle" class="app-name">Smart Town</div>
                     </div>
 
-                    <!-- Application sub title -->
-                    <div class="bottom bottom-container">
-                        <div class="bottom-title">The future of Smart Cities</div>
+
+                    <div id="mainSubtitleContainer" class="bottom bottom-container">
+                        <div id="mainSubtitle" class="bottom-title">The future of Smart Cities</div>
                     </div>
+                  
                 </paper-toolbar>
 
 
@@ -60,10 +63,30 @@
 
                         <section data-route="home" tabindex="-1">
                             <p class="subhead">Home</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis placeat asperiores atque qui velit doloremque a soluta, fugiat quasi sunt omnis debitis eius veritatis quos cum vel dolorum dolorem voluptatum.</p>
+                            <p>Ullam at amet, repudiandae sapiente possimus tenetur veniam quaerat libero quibusdam iusto ipsam soluta est hic quos, nobis beatae dolor tempora error laudantium. Dolor nesciunt harum debitis illum voluptatem deleniti.</p>
+                            <p>Asperiores facilis tenetur quia repudiandae officiis laudantium nesciunt error consectetur sint doloribus dolores omnis expedita non accusantium at quas fugit, quidem, id nobis, ipsum unde! Aliquid eligendi ipsam beatae nam.</p>
+                            <p>Porro autem quae accusantium vel, ipsa ipsum ullam cupiditate. Eligendi dolorum nulla veritatis repudiandae, sed blanditiis, quos, saepe autem explicabo non id! Odit dolore vel magnam quod doloremque. Voluptates, animi.</p>
+                            <p>Quidem nihil ullam laborum illo libero optio sint culpa animi asperiores, a veritatis vel enim voluptatem perferendis accusantium ratione excepturi voluptas sequi exercitationem possimus aut perspiciatis doloremque placeat iusto. Obcaecati.</p>
+                            <p>Commodi aspernatur beatae tenetur veritatis quis obcaecati, sunt ipsa aperiam? Maiores earum culpa odit odio dolore esse nulla ullam harum officiis repellat excepturi tempore repellendus ea quasi recusandae, autem sequi?</p>
+                            <p>A, deserunt, quidem! Distinctio consequuntur odit dignissimos veniam odio a deleniti natus magni impedit dicta voluptas est soluta excepturi, laboriosam vel perferendis mollitia, porro quod illum error incidunt, commodi ipsa.</p>
+                            <p>Voluptate nesciunt fugit quas amet deleniti, similique sapiente nulla iste temporibus, unde, est omnis eaque commodi inventore veniam. Necessitatibus sed cumque fugit officiis eaque, hic temporibus minus soluta beatae magnam?</p>
+                            <p>Placeat ex architecto consequuntur, error facere eos quidem consequatur esse dolor quod similique quas dignissimos molestias, dicta necessitatibus at reprehenderit quis corporis minima aliquam. Veritatis temporibus sequi ipsam ea rerum.</p>
+                            <p>Doloremque laborum, obcaecati ab commodi nemo impedit facere voluptate ducimus inventore, molestias debitis soluta pariatur quasi sunt repudiandae fugiat laudantium at incidunt nulla nihil minus nobis. Repellat nostrum consectetur ratione.</p>
                         </section>
 
                         <section data-route="developer" tabindex="-1">
                             <p class="subhead">Developer</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis placeat asperiores atque qui velit doloremque a soluta, fugiat quasi sunt omnis debitis eius veritatis quos cum vel dolorum dolorem voluptatum.</p>
+                            <p>Ullam at amet, repudiandae sapiente possimus tenetur veniam quaerat libero quibusdam iusto ipsam soluta est hic quos, nobis beatae dolor tempora error laudantium. Dolor nesciunt harum debitis illum voluptatem deleniti.</p>
+                            <p>Asperiores facilis tenetur quia repudiandae officiis laudantium nesciunt error consectetur sint doloribus dolores omnis expedita non accusantium at quas fugit, quidem, id nobis, ipsum unde! Aliquid eligendi ipsam beatae nam.</p>
+                            <p>Porro autem quae accusantium vel, ipsa ipsum ullam cupiditate. Eligendi dolorum nulla veritatis repudiandae, sed blanditiis, quos, saepe autem explicabo non id! Odit dolore vel magnam quod doloremque. Voluptates, animi.</p>
+                            <p>Quidem nihil ullam laborum illo libero optio sint culpa animi asperiores, a veritatis vel enim voluptatem perferendis accusantium ratione excepturi voluptas sequi exercitationem possimus aut perspiciatis doloremque placeat iusto. Obcaecati.</p>
+                            <p>Commodi aspernatur beatae tenetur veritatis quis obcaecati, sunt ipsa aperiam? Maiores earum culpa odit odio dolore esse nulla ullam harum officiis repellat excepturi tempore repellendus ea quasi recusandae, autem sequi?</p>
+                            <p>A, deserunt, quidem! Distinctio consequuntur odit dignissimos veniam odio a deleniti natus magni impedit dicta voluptas est soluta excepturi, laboriosam vel perferendis mollitia, porro quod illum error incidunt, commodi ipsa.</p>
+                            <p>Voluptate nesciunt fugit quas amet deleniti, similique sapiente nulla iste temporibus, unde, est omnis eaque commodi inventore veniam. Necessitatibus sed cumque fugit officiis eaque, hic temporibus minus soluta beatae magnam?</p>
+                            <p>Placeat ex architecto consequuntur, error facere eos quidem consequatur esse dolor quod similique quas dignissimos molestias, dicta necessitatibus at reprehenderit quis corporis minima aliquam. Veritatis temporibus sequi ipsam ea rerum.</p>
+                            <p>Doloremque laborum, obcaecati ab commodi nemo impedit facere voluptate ducimus inventore, molestias debitis soluta pariatur quasi sunt repudiandae fugiat laudantium at incidunt nulla nihil minus nobis. Repellat nostrum consectetur ratione.</p>
                         </section>
 
 
