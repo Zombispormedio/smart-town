@@ -1,20 +1,31 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-styles/typography.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 
-<!-- shared styles for all elements and index.html -->
 <dom-module id="shared-styles">
-  <template>
-    <style>
-      .page-title {
-        @apply(--paper-font-display2);
-      }
+    <template>
+        <style>
+
+            .flex-horizontal {
+                @apply(--layout-horizontal);
+                width:100%;
+            }
+
+            .flex {
+                @apply(--layout-flex);
+            }
+            
+            
+            .page-title {
+                @apply(--paper-font-display2);
+            }
 
 
-      @media (max-width: 600px) {
-        .page-title {
-          font-size: 24px!important;
-        }
-      }
-    </style>
-  </template>
+            @media (max-width: 600px) {
+                .page-title {
+                    font-size: 24px!important;
+                }
+            }
+        </style>
+    </template>
 </dom-module>

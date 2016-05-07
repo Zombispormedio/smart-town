@@ -22,20 +22,26 @@
     <body unresolved>
 
         <template is="dom-bind" id="app">
-            <!-- Main Area -->
+
             <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
-                <!-- Main Toolbar -->
 
                 <paper-toolbar id="mainToolbar" class="tall" bottom-justify="center" middle-justify="center">
-                   <div class="top top-container">
-                        <iron-image id="mainLogo" src="assets/images/house_with_garden_36.png"></iron-image>
-                        <span class="flex"></span>
-                        
-                        <paper-button raised class="custom yellow">Get Your Api Key</paper-button>
-                        
-                   </div>
-                   
+                    <div class="top top-container flex-horizontal">
 
+                        <div id="mainLogo">
+                            <iron-image src="assets/images/house_with_garden_36.png"></iron-image>
+                        </div>
+
+                        <div class="flex"></div>
+
+
+                        <paper-button raised class="buttonToolbar yellow">
+                            <a href="{{baseUrl}}developer">  Get Your Api Key</a>
+
+                        </paper-button>
+
+
+                    </div>
 
                     <div class="middle middle-container">
                         <div class="app-name">Smart Town</div>
@@ -48,28 +54,18 @@
                 </paper-toolbar>
 
 
-                <!-- Main Content -->
                 <div class="content">
-                    <iron-pages attr-for-selected="data-route" selected="home">
+                    <iron-pages attr-for-selected="data-route" selected="[[route]]">
+
                         <section data-route="home" tabindex="-1">
-                            <paper-material elevation="1">
-                                <my-greeting></my-greeting>
-
-                                <p class="subhead">You now have:</p>
-                                <my-list></my-list>
-
-                                <p>Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/">preview</a> them live.</p>
-                            </paper-material>
-
-                            <paper-material elevation="1">
-                                <p>This is another card.</p>
-                            </paper-material>
-
-                            <paper-material elevation="1">
-                                <h2 id="license">License</h2>
-
-                            </paper-material>
+                            <p class="subhead">Home</p>
                         </section>
+
+                        <section data-route="developer" tabindex="-1">
+                            <p class="subhead">Developer</p>
+                        </section>
+
+
                     </iron-pages>
                 </div>
             </paper-scroll-header-panel>

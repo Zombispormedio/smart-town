@@ -26,16 +26,26 @@
     }
 
 
-   
-    paper-button.custom:hover {
-        background-color: var(--light-primary-color);
+
+    paper-button.buttonToolbar:hover {
+        background-color: var(--light-accent-color);
     }
 
+    paper-button.buttonToolbar{
+        background-color:  #ffeb3b;
+        color:#000000;
 
+    }
+
+    #mainLogo{
+        margin-left: 1%;
+    }
 
     paper-scroll-header-panel {
         height: 100%;
     }
+
+
 
     #mainToolbar{
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
@@ -57,9 +67,7 @@
     }
 
 
-    .flex {
-        @apply(--layout-flex);
-    }
+
     #mainToolbar .middle-container  {
         height: 100%;
         margin-left: 48px;
@@ -81,7 +89,7 @@
 
     /* Height of the scroll area */
     .content {
-        height: 900px;
+        max-height: 900px;
     }
 
     section[data-route="home"] paper-material {
