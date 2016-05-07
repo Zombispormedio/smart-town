@@ -52,8 +52,12 @@
 
             next();
         }
-
-
+        
+        app.mainTitle="Smart Town";
+        
+        app.setTitle=function(state){
+            document.title= app.mainTitle+" - "+state;
+        }
 
         // Routes
         page('*', scrollToTop, function(ctx, next) {
@@ -62,7 +66,9 @@
 
         page('/', Condense,  function() {
             app.route = 'home';
-
+            
+            app.setTitle("Home")
+            
         });
 
         page(app.baseUrl,  Condense, function() {
@@ -71,6 +77,7 @@
 
         page('/developer', Fixed, function() {
             app.route = 'developer';
+            app.setTitle("Developers")
 
         });
 
