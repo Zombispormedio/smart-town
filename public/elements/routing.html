@@ -31,13 +31,15 @@
         page(app.baseUrl, function() {
             app.route = 'home';
         });
-        
-         page('/developer', function() {
+
+        page('/developer', function() {
             app.route = 'developer';
 
         });
 
-        page();
+        page({
+            hashbang: true
+        });
 
 
 

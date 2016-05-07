@@ -34,11 +34,12 @@
 
                         <div class="flex"></div>
 
+                        <template is="dom-if" if="{{route !== 'developer'}}">
+                            <paper-button raised class="buttonToolbar yellow">
+                                <a href="{{baseUrl}}developer">  Get Your Api Key</a>
 
-                        <paper-button raised class="buttonToolbar yellow">
-                            <a href="{{baseUrl}}developer">  Get Your Api Key</a>
-
-                        </paper-button>
+                            </paper-button>
+                        </template>
 
 
                     </div>
