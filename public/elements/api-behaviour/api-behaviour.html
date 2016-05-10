@@ -11,26 +11,55 @@
             return { writable: false, configurable: true, value: value };
         };
 
+        var self=this;
+
+
+        //this.env=location.hostname==="locahost"?"dev":"prod";
+        this.env="prod";
+        
+        this.prod={
+            protocol:"https",
+            host:"opensmarttown.herokuapp.com",
+            port:""
+        };
+
+        this.dev={
+            protocol:"http",
+            host:"localhost",
+            port:"5090"
+        };
+
+        this.getPath=function(path){
+            path=path||"";
+            var api=self[self.env];
+            return api.protocol+"://"+api.host+(api.port!==""?(":"+api.port):"")+"/"+path;
+        };
+
+        this.GET=function(path, params, _then, _catch){
+            var p=self.getPath(path);
+            axios.get(p, {
+                params: params
+            }, _then, _catch);
+        }
+        
+        this.POST=function(path, body, _then, _catch){
+            var p=self.getPath(path);
+            axios.post(p, body, _then, _catch);
+        }
+
         Behaviour.prototype = {};
 
         return Object.create(Behaviour.prototype, {
-            env:secure(location.hostname==="locahost"?"dev":"prod"),
-            prod:secure({
-                protocol:"https",
-                host:"opensmarttown.herokuapp.com",
-                port:""
-            }),
+            env:secure(self.env),
+            
+            prod:secure(self.prod),
+            dev:secure(self.dev),
+            
+            getPath:secure(self.getPath),
 
-            dev:secure({
-                protocol:"http",
-                host:"localhost",
-                port:"5090"
-            }),
-            getPath:secure(function(path){
-                path=path||"";
-                var api=this[this.env];
-                return api.protocol+"://"+api.host+(api.port!==""?(":"+api.port):"")+"/"+path;
-            })
+            GET:secure(self.GET),
+            POST:secure(self.POST)
+            
         });
 
     }

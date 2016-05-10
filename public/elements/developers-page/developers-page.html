@@ -103,7 +103,9 @@
                     this.API=Polymer.APIBehaviour();
                 },
                 getIt: function() {
-                   console.log(this.API)
+                   this.API.GET("", {}, function(res){
+                       console.log(res);
+                   })
                 }
             });
         })();
