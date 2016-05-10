@@ -1,12 +1,104 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
 
 <dom-module id="developers-page">
     <template>
-    
-   
-           <h1>Welcome, Developer</h1>
-       
+        <style>
+            .flex-center-justified {
+                @apply(--layout-horizontal);
+                @apply(--layout-center-justified);
+                padding-bottom: 5px;
+            }
+
+            :host{
+                text-align: center;
+            }
+
+            h1{
+                font-size: 3em;
+                margin-bottom: 0;
+                margin-top: 20px;
+            }
+
+            .yellow{
+                background-color: var(--paper-yellow-500)
+            }
+
+            paper-fab.white {
+                --paper-fab-background: white;
+                --paper-fab-keyboard-focus-background: var(--paper-grey-100);
+                color:black;
+
+                --iron-icon-height: 32px;
+                --iron-icon-width: 32px;
+
+            }
+
+            paper-card{
+                width:400px;
+                max-width: 400px;
+                top: 20px;
+            }
+
+            paper-tooltip.custom img {
+                width: 40px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+                float: left;
+            }
+            .custom {
+                --paper-tooltip-background: black;
+                --paper-tooltip-text-color: var(--paper-pink-100);
+                width: 200px;
+                --paper-tooltip:{
+                    height: 40px;
+                    font-size: 20px;
+
+                }
+
+            }
+
+            .custom span{
+
+                top: 8px;
+                position: relative;
+
+            }
+
+        </style>
+
+        <h1>Welcome, Developer </h1>
+        <h3>Or Data Scientist or Data Fandom or Else</h3>
+        <div  class="container flex-center-justified">
+            <paper-card class="yellow" heading="Start your adventure!">
+                <div class="card-content">
+                    <h3>Get Your API Key</h3>
+
+                    <paper-input label="Your Email"></paper-input>
+
+                </div>
+                <div class="flex-center-justified">
+                    <paper-fab icon="social:mood" title="Press Me 👄" id="button_icon1" class="white"></paper-fab>
+                    <paper-tooltip for="button_icon1" class="custom" animation-delay="0" position="left">
+                        <img src="../../assets/images/1f48b.png">
+                        <span>Press Me</span>
+                    </paper-tooltip>
+                </div>
+            </paper-card>
+        </div>
+
+
+
     </template>
 
     <script>

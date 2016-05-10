@@ -13,6 +13,10 @@
 
         <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 
+        <script defer src="bower_components/lodash/dist/lodash.min.js"></script>
+
+        <script defer src="scripts/app.js"></script>
+
         <link rel="import" href="elements/elements.html">
 
 
@@ -33,7 +37,7 @@
                             <a href="{{baseUrl}}">
                                 <iron-image src="assets/images/house_with_garden_36.png"></iron-image>
                                 <element-if result="home" value="[[route]]">
-                                Inicio
+                                   <span style="font-size: 1.5em;">HOME</span> 
                                 </element-if>
                                 <paper-ripple class="circle"></paper-ripple>
                             </a>
@@ -62,26 +66,34 @@
 
 
                 <div class="content">
-                    <iron-pages attr-for-selected="data-route" selected="[[route]]">
+                    <iron-pages id="pages" attr-for-selected="data-route" selected="[[route]]">
 
-                        <section data-route="home" tabindex="-1">
-                           <main-page></main-page>
+                        <section data-route="home">
+                            <main-page></main-page>
                         </section>
 
-                        <section data-route="developer" tabindex="-1">
+                        <section data-route="developer">
                             <developers-page></developers-page>
                         </section>
 
 
                     </iron-pages>
+
+
+
+                    <footer class="container flex-end-justified">
+                        <div class="end">
+                            <h6>
+                                <iron-icon icon="icons:copyright"></iron-icon>
+                                Smart Town 2016
+                            </h6>
+                        </div>
+                    </footer>
                 </div>
             </paper-scroll-header-panel>
 
 
         </template>
-
-
-        <script src="scripts/app.js"></script>
 
     </body>
 

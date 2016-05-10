@@ -26,6 +26,7 @@
     }
 
 
+    /* Home */
 
     paper-button.buttonToolbar:hover {
         background-color: var(--light-accent-color);
@@ -39,9 +40,9 @@
 
     #mainLogo{
         margin-left: 1%;
-        
+
     }
-    
+
     #mainLogo iron-image{
         vertical-align: text-bottom;
     }
@@ -95,6 +96,18 @@
         transform-origin: left center;
     }
 
+
+    /****Developers Page***/
+
+    .developer-main{
+
+        padding-top:0;
+        margin-bottom: 30px;
+
+    }
+
+
+
     /* Height of the scroll area */
     .content {
         max-height: 900px;
@@ -106,6 +119,20 @@
 
     section[data-route="home"] paper-material .subhead {
         @apply(--paper-font-subhead);
+    }
+
+    footer{
+        height: 78px;
+        border-top-width: 1px;
+        border-top-style: solid;
+        margin: 0;
+        border-top-color: rgba(0,0,0,0.12);
+        color: grey;
+    }
+
+    footer.flex-end-justified .end{
+        right: 35px;
+        position: relative;
     }
 
 

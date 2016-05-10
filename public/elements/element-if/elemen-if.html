@@ -3,10 +3,11 @@
 
 <dom-module id="element-if">
     <template>
-     <template is="dom-if" if="{{enabled}}" restamp="true">
-      <content></content>
-    </template>
-    
+
+        <template is="dom-if" if="{{enabled}}" restamp="true">
+            <content></content>
+        </template>
+
     </template>
 
     <script>
@@ -34,15 +35,15 @@
 
                 },
                 computeEnabled:function(value, result){
-                  var enabled=false;
-                    
+                    var enabled=false;
+
                     switch(this.type){
                         case "1": enabled=(value===result);
                             break;
                         case "0": 
                         default: enabled=(value!==result);
                     }
-                    
+
                     return enabled;
                 }
             });

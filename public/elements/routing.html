@@ -23,7 +23,6 @@
             var toolbar=document.getElementById("mainToolbar");
             toolbar.classList.remove("tall")
 
-
             var title=document.getElementById("mainTitle");
             title.classList.add("hide");
 
@@ -52,34 +51,93 @@
 
             next();
         }
-        
+
         app.mainTitle="Smart Town";
-        
+
         app.setTitle=function(state){
             document.title= app.mainTitle+" - "+state;
         }
+
+
+        app.RouteClasses={
+            home:[{
+                id:"pages",
+                classes:["home-main"]
+            }],
+            developer:[{
+                id:"pages",
+                classes:["developer-main"]
+            }]
+        }
+
+
+        var applyRouteClass=function(components, remove){
+
+
+            components.forEach(function(item){
+
+                var elem=document.getElementById(item.id);
+
+                item.classes.forEach(function(a){
+
+                    if(remove){
+                        elem.classList.remove(a);
+
+                    }else{
+                        elem.classList.add(a);
+                    }
+
+                });
+
+
+            });
+
+
+        }
+
+        var CleanAndAddRouteClasses=function(current){
+            var rest=_.pull(Object.keys(app.RouteClasses), current);
+
+            rest.forEach(function(key){
+
+                applyRouteClass(app.RouteClasses[key], true);
+
+            });
+
+            applyRouteClass(app.RouteClasses[current]);
+
+        }
+
+
+
+
+        var Home=function() {
+            app.route = 'home';
+            app.setTitle("Home")
+            CleanAndAddRouteClasses(app.route);
+
+        };
+
+        var Developer=function() {
+            app.route = 'developer';
+            app.setTitle("Developers");
+         
+            CleanAndAddRouteClasses(app.route);
+        };
+
+
+
 
         // Routes
         page('*', scrollToTop, function(ctx, next) {
             next();
         });
 
-        page('/', Condense,  function() {
-            app.route = 'home';
-            
-            app.setTitle("Home")
-            
-        });
+        page('/', Condense,  Home);
 
-        page(app.baseUrl,  Condense, function() {
-            app.route = 'home';
-        });
+        page(app.baseUrl,  Condense, Home);
 
-        page('/developer', Fixed, function() {
-            app.route = 'developer';
-            app.setTitle("Developers")
-
-        });
+        page('/developer', Fixed, Developer);
 
         page({
             hashbang: true
