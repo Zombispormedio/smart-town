@@ -23,6 +23,7 @@
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.7",
     "platinum-elements": "PolymerElements/platinum-elements#^2.0.0",
-    "lodash": "^4.12.0"
+    "lodash": "^4.12.0",
+    "axios": "^0.11.0"
   }
 }

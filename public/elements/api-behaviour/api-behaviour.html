@@ -1,0 +1,41 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<script>
+
+    Polymer.APIBehaviour=function(){
+
+        var Behaviour = Object.create(null);
+
+        var secure = function (value) {
+            return { writable: false, configurable: true, value: value };
+        };
+
+        Behaviour.prototype = {};
+
+        return Object.create(Behaviour.prototype, {
+            env:secure(location.hostname==="locahost"?"dev":"prod"),
+            prod:secure({
+                protocol:"https",
+                host:"opensmarttown.herokuapp.com",
+                port:""
+            }),
+
+            dev:secure({
+                protocol:"http",
+                host:"localhost",
+                port:"5090"
+            }),
+            getPath:secure(function(path){
+                path=path||"";
+                var api=this[this.env];
+                return api.protocol+"://"+api.host+(api.port!==""?(":"+api.port):"")+"/"+path;
+            })
+        });
+
+    }
+
+
+
+
+</script>

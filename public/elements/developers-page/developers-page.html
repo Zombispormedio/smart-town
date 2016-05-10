@@ -5,11 +5,14 @@
 <link rel="import" href="../../bower_components/iron-icons/social-icons.html">
 
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-styles/color.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+
+<link rel="import" href="../api-behaviour/api-behaviour.html">
 
 <dom-module id="developers-page">
     <template>
@@ -17,7 +20,9 @@
             .flex-center-justified {
                 @apply(--layout-horizontal);
                 @apply(--layout-center-justified);
-                padding-bottom: 5px;
+
+                padding-bottom: 20px;
+                margin-top: 20px;
             }
 
             :host{
@@ -30,18 +35,9 @@
                 margin-top: 20px;
             }
 
+
             .yellow{
                 background-color: var(--paper-yellow-500)
-            }
-
-            paper-fab.white {
-                --paper-fab-background: white;
-                --paper-fab-keyboard-focus-background: var(--paper-grey-100);
-                color:black;
-
-                --iron-icon-height: 32px;
-                --iron-icon-width: 32px;
-
             }
 
             paper-card{
@@ -50,30 +46,30 @@
                 top: 20px;
             }
 
-            paper-tooltip.custom img {
-                width: 40px;
-                padding-right: 10px;
-                padding-bottom: 10px;
-                float: left;
-            }
-            .custom {
-                --paper-tooltip-background: black;
-                --paper-tooltip-text-color: var(--paper-pink-100);
-                width: 200px;
-                --paper-tooltip:{
-                    height: 40px;
-                    font-size: 20px;
-
-                }
-
+            paper-card h3{
+                padding-bottom: 0;
+                padding-top: 0;
+                margin: 0;
             }
 
-            .custom span{
-
-                top: 8px;
-                position: relative;
-
+            paper-card paper-input{
+                margin-top: 20px;
             }
+
+            paper-button.custom:hover {
+                background-color: var(--paper-grey-100);
+            }
+
+            paper-button.custom {
+                background-color: white;
+                color: black;
+                --paper-button-raised-keyboard-focus: {
+                    background-color: var(--paper-grey-a200) !important;
+                    color: black !important;
+                };
+            }
+
+
 
         </style>
 
@@ -88,11 +84,7 @@
 
                 </div>
                 <div class="flex-center-justified">
-                    <paper-fab icon="social:mood" title="Press Me 👄" id="button_icon1" class="white"></paper-fab>
-                    <paper-tooltip for="button_icon1" class="custom" animation-delay="0" position="left">
-                        <img src="../../assets/images/1f48b.png">
-                        <span>Press Me</span>
-                    </paper-tooltip>
+                    <paper-button raised class="custom" on-click="getIt">Get it</paper-button>
                 </div>
             </paper-card>
         </div>
@@ -106,7 +98,13 @@
             'use strict';
 
             Polymer({
-                is: 'developers-page'
+                is: 'developers-page',
+                created:function(){
+                    this.API=Polymer.APIBehaviour();
+                },
+                getIt: function() {
+                   console.log(this.API)
+                }
             });
         })();
     </script>
