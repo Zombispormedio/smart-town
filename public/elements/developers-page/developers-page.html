@@ -1,12 +1,14 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/social-icons.html">
 
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-styles/color.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
@@ -69,7 +71,19 @@
                 };
             }
 
+            paper-progress {
+                --paper-progress-container-color:var(--paper-yellow-200);
+                --paper-progress-active-color:var(--paper-orange-400);
+                --paper-progress-height:2px;
+                width: 368px;
+                margin-top: -7px;
+            }
 
+            paper-fab.custom{
+                --paper-fab-background: white;
+                --paper-fab-keyboard-focus-background: var(--paper-grey-300);
+                color: black;
+            }
 
         </style>
 
@@ -80,11 +94,27 @@
                 <div class="card-content">
                     <h3>Get Your API Key</h3>
 
-                    <paper-input label="Your Email"></paper-input>
+                    <template is="dom-if" if="{{!made}}" restamp="true">
+                        <paper-input label="Email" required id="emailInput"  type="email" error-message="Email, please" disabled="{{loading}}"></paper-input>
 
+                        <template is="dom-if" if="{{loading}}" restamp="true">
+                            <paper-progress indeterminate></paper-progress>
+                        </template>
+                    </template>
+
+                    <template is="dom-if" if="{{made}}" restamp="true">
+
+                        <p>{{message}}</p>
+
+                    </template>
                 </div>
                 <div class="flex-center-justified">
-                    <paper-button raised class="custom" on-click="getIt">Get it</paper-button>
+                    <template is="dom-if" if="{{!made}}" restamp="true">
+                        <paper-button raised class="custom" on-click="getApiKey" disabled="{{loading}}">Let's Go</paper-button>
+                    </template>
+                    <template is="dom-if" if="{{made}}" restamp="true">
+                        <paper-fab icon="icons:check" title="Check" class="custom" on-click="reload"></paper-fab>
+                    </template>
                 </div>
             </paper-card>
         </div>
@@ -102,10 +132,47 @@
                 created:function(){
                     this.API=Polymer.APIBehaviour();
                 },
-                getIt: function() {
-                   this.API.GET("", {}, function(res){
-                       console.log(res);
-                   })
+                properties:{
+                    loading:{
+                        type:Boolean, 
+                        value:false
+                    },
+                    made:{
+                        type:Boolean, 
+                        value:false
+                    },
+                    message:{
+                        type:String,
+                        value:"Congratulations!"
+                    }
+                },
+
+                getApiKey: function() {
+                    var self=this;
+                    var input=document.getElementById("emailInput");
+
+                    if(input.validate()){
+                        var email=input.value;
+                        this.loading=true;
+                        this.API.POST("users",{email:email}, function(data){
+                            self.loading=false;
+                            input.value="";
+                            self.made=true;
+                            self.message=data.message;
+                        }, function(errors){
+                            self.loading=false;
+                            input.value="";
+                            input.errorMessage=errors[0].message;
+                            input.validate();
+                        });
+
+
+                    }
+
+
+                },
+                reload:function(){
+                    this.made=false;
                 }
             });
         })();

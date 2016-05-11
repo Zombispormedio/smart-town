@@ -14,9 +14,10 @@
         var self=this;
 
 
-        //this.env=location.hostname==="locahost"?"dev":"prod";
-        this.env="prod";
-        
+        this.env=location.hostname==="localhost"?"dev":"prod";
+        //this.env="prod";
+    
+
         this.prod={
             protocol:"https",
             host:"opensmarttown.herokuapp.com",
@@ -35,31 +36,109 @@
             return api.protocol+"://"+api.host+(api.port!==""?(":"+api.port):"")+"/"+path;
         };
 
-        this.GET=function(path, params, _then, _catch){
+        this.GET=function(){
+            var path, params, _then, _catch;
+            Array.prototype.slice.call(arguments).forEach(function(a, index){
+                switch(true){
+                    case (path==void 0&&typeof a=="string" && index==0):
+                        path=a;
+                        break;
+
+
+                    case (params==void 0&&typeof a=="object" && index<=1):
+                        params=a;
+                        break;
+                    case (_then==void 0&&typeof a=="function"):
+                        _then=a;
+                        break;
+
+                    case (_then!=void 0&&_catch==void 0&&typeof a=="function"):
+                        _catch=a;
+                        break;
+                }
+
+
+            });
+
+
+
             var p=self.getPath(path);
-            axios.get(p, {
-                params: params
-            }, _then, _catch);
+            var request= axios.get(p, {params: params});
+
+            if(_then)request=request.then(function(res){
+                var data=res.data;
+                if(!data.success && _catch){
+                   return _catch(data.errors);
+                }
+                    _then(data);
+                
+            });
+
+            if(_catch)request.catch(function(res){
+                var data={};
+                if(res.data)data=res.data;
+                _catch(data.errors||data);
+            });
+
         }
+
+        this.POST=function(){
+            var path, body, _then, _catch;
+            Array.prototype.slice.call(arguments).forEach(function(a, index){
+                switch(true){
+                    case (path==void 0&&typeof a=="string" && index==0):
+                        path=a;
+                        break;
+
+
+                    case (body==void 0&&typeof a=="object" && index<=1):
+                        body=a;
+                        break;
+                    case (_then==void 0&&typeof a=="function"):
+                        _then=a;
+                        break;
+
+                    case (_then!=void 0&&_catch==void 0&&typeof a=="function"):
+                        _catch=a;
+                        break;
+                }
+
+
+            });
+
         
-        this.POST=function(path, body, _then, _catch){
+
             var p=self.getPath(path);
-            axios.post(p, body, _then, _catch);
+            var request =axios.post(p, body);
+
+            if(_then)request=request.then(function(res){
+                var data=res.data;
+                if(!data.success && _catch){
+                   return _catch(data.errors);
+                }
+                    _then(data);
+            });
+
+            if(_catch)request.catch(function(res){
+                 var data={};
+                if(res.data)data=res.data;
+                _catch(data.errors||data);
+            });
         }
 
         Behaviour.prototype = {};
 
         return Object.create(Behaviour.prototype, {
             env:secure(self.env),
-            
+
             prod:secure(self.prod),
             dev:secure(self.dev),
-            
+
             getPath:secure(self.getPath),
 
             GET:secure(self.GET),
             POST:secure(self.POST)
-            
+
         });
 
     }
