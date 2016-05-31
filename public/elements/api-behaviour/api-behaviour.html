@@ -16,7 +16,7 @@
 
         this.env=location.hostname==="localhost"?"dev":"prod";
         //this.env="prod";
-    
+        
 
         this.prod={
             protocol:"https",
@@ -35,6 +35,7 @@
             var api=self[self.env];
             return api.protocol+"://"+api.host+(api.port!==""?(":"+api.port):"")+"/"+path;
         };
+        this.Key="1XiImCJcWbHR4EdwAsJ7F0X6whFyIlJtwG9mvKFLrJeKuHGN1B";
 
         this.GET=function(){
             var path, params, _then, _catch;
@@ -127,17 +128,19 @@
         }
 
         Behaviour.prototype = {};
+        
 
         return Object.create(Behaviour.prototype, {
             env:secure(self.env),
-
+            Key:secure(self.Key),
             prod:secure(self.prod),
             dev:secure(self.dev),
 
             getPath:secure(self.getPath),
 
             GET:secure(self.GET),
-            POST:secure(self.POST)
+            POST:secure(self.POST),
+         
 
         });
 

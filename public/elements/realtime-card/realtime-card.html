@@ -1,0 +1,106 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../api-behaviour/api-behaviour.html">
+<dom-module id="realtime-card">
+    <template>
+        <style>
+            
+            paper-card{
+                --paper-card-header-image{
+                    background-color: red;
+                }
+            }
+
+
+        </style>
+        <iron-ajax id="realtime"
+                   auto
+                   url="[[path]]"
+                   params='{{params}}'
+                   handle-as="json"
+                   on-response="handleResponse"
+                   debounce-duration="300"></iron-ajax>
+                   
+        <paper-card heading="{{value}}{{unit}}" image="../../assets/images/sun.png"a>
+            <div class="card-content"></div>
+
+        </paper-card>
+
+    </template>
+
+    <script>
+        (function() {
+            'use strict';
+
+            Polymer({
+                created:function(){
+                    this.API=Polymer.APIBehaviour();
+
+                },
+                is: 'realtime-card',
+                properties:{
+                    sensorRef:{
+                        type:Number,
+                        value:1     
+                    },
+                    onlyRefs:{
+                        type:Boolean,
+                        value:false
+                    },
+                    path:{
+                        computed:"getPath(sensorRef)"
+                    },
+                    params:{
+                        type:Object,
+                        computed:"getParams(onlyRefs)"
+                    },
+                    value:{
+                        type:Number,
+                        value:void 0
+                    },
+                    unit:{
+                        type:String,
+                        value:"Waiting..."
+                    }
+                },
+
+                getPath:function(sensorRef){
+
+                    return this.API.getPath("current/"+sensorRef);
+                },
+                getParams:function(onlyRefs){
+
+                    return {
+                        apiKey:this.API.Key,
+                        onlyRefs:onlyRefs
+                    };
+                },
+                update:function(){
+                    this.async(function(){
+                        this.$.realtime.generateRequest();
+                    },30000);
+                },
+                handleResponse:function(ev){
+                    var data=ev.target.lastResponse;
+                    if(!data.success){
+                        return console.log(data);
+                    }
+
+                    var node=data.result[0];
+                    var current=node.current;
+
+                    this.value=current.value;
+                    this.unit=node.unit.symbol;
+                    this.update();
+
+                },
+
+
+
+
+
+            });
+        })();
+    </script>
+</dom-module>
