@@ -39,7 +39,7 @@
                    debounce-duration="300"></iron-ajax>
 
         <paper-card heading="{{value}}{{unit}}" image="../../assets/images/{{weatherImage}}.png" id="weather_card">
-            <div class="card-content"></div>
+            <div class="card-content">Zone: {{zone}}</div>
 
         </paper-card>
 
@@ -83,6 +83,10 @@
                     weatherImage:{
                         type:String,
                         value:"sun"
+                    },
+                    zone:{
+                        type:String,
+                        value:"N/A"
                     }
                 },
 
@@ -114,6 +118,7 @@
 
                     this.value=current.value;
                     this.unit=node.unit.symbol;
+                    this.zone=node.grid.zone.display_name;
 
                     if(this.value<=23){
                         if(!this.isCold()){
