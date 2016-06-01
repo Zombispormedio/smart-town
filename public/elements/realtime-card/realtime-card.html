@@ -31,7 +31,7 @@
 
         </style>
         <iron-ajax id="realtime"
-                   auto
+
                    url="[[path]]"
                    params='{{params}}'
                    handle-as="json"
@@ -40,7 +40,6 @@
 
         <paper-card heading="{{value}}{{unit}}" image="../../assets/images/{{weatherImage}}.png" id="weather_card">
             <div class="card-content">Zone: {{zone}}</div>
-
         </paper-card>
 
     </template>
@@ -65,12 +64,20 @@
                         type:Boolean,
                         value:false
                     },
+                    lat:{
+                        type:Number,
+                        value:0
+                    },
+                    long:{
+                        type:Number,
+                        value:0 
+                    },
                     path:{
                         computed:"getPath(sensorRef)"
                     },
                     params:{
                         type:Object,
-                        computed:"getParams(onlyRefs)"
+                        computed:"getParams(onlyRefs, lat, long)"
                     },
                     value:{
                         type:Number,
@@ -86,7 +93,7 @@
                     },
                     zone:{
                         type:String,
-                        value:"N/A"
+                        value:"Waiting..."
                     }
                 },
 
@@ -94,12 +101,17 @@
 
                     return this.API.getPath("current/"+sensorRef);
                 },
-                getParams:function(onlyRefs){
-
-                    return {
+                getParams:function(onlyRefs, lat, long){
+                    var obj={
                         apiKey:this.API.Key,
+
                         onlyRefs:onlyRefs
                     };
+                    if(lat!==0 && long !==0){
+                        obj.near=[long, lat].join(",");
+                    }
+
+                    return obj;
                 },
                 update:function(){
                     this.async(function(){
@@ -127,7 +139,7 @@
 
                     }else{
                         if(this.isCold()){
-                         
+
                             this.Hot();
                         }
                     }
@@ -157,6 +169,26 @@
                 },
                 isCold:function(){
                     return  this.weatherImage==this.weather.coldImage;
+                },
+                setPosition:function(pos){
+                    var coords=pos.coords;
+                    this.lat=coords.latitude;
+                    this.long=coords.longitude;
+                    this.$.realtime.generateRequest();
+                },
+                error:function(error){
+                    console.log(error);
+                },
+                
+                getPosition:function(){
+                    
+                    var success=this.setPosition.bind(this);
+                    var error=this.error.bind(this);
+                    navigator.geolocation.getCurrentPosition(success, error);
+                },
+
+                ready:function(){
+                    this.getPosition();
                 }
 
 
