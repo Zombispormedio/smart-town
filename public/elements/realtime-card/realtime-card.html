@@ -58,7 +58,7 @@
                 properties:{
                     sensorRef:{
                         type:Number,
-                        value:1     
+                        value:0     
                     },
                     onlyRefs:{
                         type:Boolean,
@@ -98,8 +98,11 @@
                 },
 
                 getPath:function(sensorRef){
-
-                    return this.API.getPath("current/"+sensorRef);
+                    var p="current";
+                    if(sensorRef>0){
+                        p+="/"+sensorRef;
+                    }
+                    return this.API.getPath(p);
                 },
                 getParams:function(onlyRefs, lat, long){
                     var obj={
@@ -116,7 +119,7 @@
                 update:function(){
                     this.async(function(){
                         this.$.realtime.generateRequest();
-                    },30000);
+                    },5000);
                 },
 
                 handleResponse:function(ev){
