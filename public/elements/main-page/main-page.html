@@ -6,8 +6,9 @@
 
 <dom-module id="main-page">
     <template>
-       
-        <realtime-card sensor="1"></realtime-card>
+
+        <realtime-card id="realtime" sensor-ref="1" magnitude="1"></realtime-card>
+      
 
     </template>
 
@@ -16,8 +17,35 @@
             'use strict';
 
             Polymer({
-                is: 'main-page'
+                is: 'main-page',
+                properties:{
+                    route:{
+                        type:String,
+                        value:"",
+                        reflectToAttribute:true,
+                        observer:"routeChanged"
+                    },
+                    realtimeEnabled:{
+                        type:Boolean, 
+                        value:false,
+                        notify:true
+                    }
+                },
+                routeChanged:function(newValue){
+                    console.log(newValue)
+                    if(newValue==="home"){
+                        this.$.realtime.enabled=true;
+                    }else{
+                          this.$.realtime.enabled=false;
+                    }
+                },
+                ready:function(){
+
+
+                }
             });
+
+
         })();
     </script>
 </dom-module>

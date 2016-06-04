@@ -58,7 +58,8 @@
                 properties:{
                     sensorRef:{
                         type:Number,
-                        value:0     
+                        value:0,
+                        reflectToAttribute: true
                     },
                     onlyRefs:{
                         type:Boolean,
@@ -77,7 +78,7 @@
                     },
                     params:{
                         type:Object,
-                        computed:"getParams(onlyRefs, lat, long)"
+                        computed:"getParams(onlyRefs, lat, long, magnitude)"
                     },
                     value:{
                         type:Number,
@@ -94,6 +95,28 @@
                     zone:{
                         type:String,
                         value:"Waiting..."
+                    },
+                    magnitude:{
+                        type:Number,
+                        value:0,
+                        reflectToAttribute: true
+                    },
+                    enabled:{
+                        type:Boolean,
+                        value:false,
+                        reflectToAttribute: true,
+                        notify:true
+
+                    }
+                },
+                
+                observers:[
+                    'enabledChanged(enabled)'
+                ],
+
+                enabledChanged:function(newValue){
+                    if(newValue){
+                        this.sendRequest();
                     }
                 },
 
@@ -104,22 +127,32 @@
                     }
                     return this.API.getPath(p);
                 },
-                getParams:function(onlyRefs, lat, long){
+                getParams:function(onlyRefs, lat, long, magnitude){
                     var obj={
                         apiKey:this.API.Key,
-
+                        size:1,
                         onlyRefs:onlyRefs
                     };
                     if(lat!==0 && long !==0){
                         obj.near=[long, lat].join(",");
                     }
 
+                    if(this.magnitude>0){
+                        obj.magnitude=magnitude;
+                    }
+
+
                     return obj;
                 },
                 update:function(){
                     this.async(function(){
+                        this.sendRequest();
+                    },3000);
+                },
+
+                sendRequest:function(){
+                    if(this.enabled)
                         this.$.realtime.generateRequest();
-                    },5000);
                 },
 
                 handleResponse:function(ev){
@@ -182,16 +215,26 @@
                 error:function(error){
                     console.log(error);
                 },
-                
+
                 getPosition:function(){
-                    
+
                     var success=this.setPosition.bind(this);
                     var error=this.error.bind(this);
                     navigator.geolocation.getCurrentPosition(success, error);
                 },
 
                 ready:function(){
-                    this.getPosition();
+
+                    if(this.sensorRef===0){
+                        this.getPosition();
+                    }else{
+
+                        this.sendRequest();
+                    }
+
+
+
+
                 }
 
 

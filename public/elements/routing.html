@@ -67,6 +67,10 @@
             developer:[{
                 id:"pages",
                 classes:["developer-main"]
+            }],
+            cartodb:[{
+                id:"pages",
+                classes:["cartodb-main"]
             }]
         }
 
@@ -121,7 +125,14 @@
         var Developer=function() {
             app.route = 'developer';
             app.setTitle("Developers");
-         
+
+            CleanAndAddRouteClasses(app.route);
+        };
+
+        var CartoDB=function() {
+            app.route = 'cartodb';
+            app.setTitle("CartoDB Example");
+
             CleanAndAddRouteClasses(app.route);
         };
 
@@ -138,6 +149,8 @@
         page(app.baseUrl,  Condense, Home);
 
         page('/developer', Fixed, Developer);
+
+        page('/cartodb', Fixed, CartoDB);
 
         page({
             hashbang: true
