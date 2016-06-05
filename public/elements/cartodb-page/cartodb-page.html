@@ -4,9 +4,11 @@
 
 <dom-module id="cartodb-page">
     <template>
+        <template is="dom-if" if="{{enabled}}" restamp="true">
 
-        <iframe width="100%" height="520" frameborder="0" src="https://zombispormedio007.cartodb.com/viz/195ebdc2-2a82-11e6-a250-0ecfd53eb7d3/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-
+            <iframe width="100%" height="520" frameborder="0" src="https://zombispormedio007.cartodb.com/viz/195ebdc2-2a82-11e6-a250-0ecfd53eb7d3/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+            
+        </template>
     </template>
 
     <script>
@@ -14,7 +16,29 @@
             'use strict';
 
             Polymer({
-                is: 'cartodb-page'
+                is: 'cartodb-page',
+                properties:{
+                    route:{
+                        type:String,
+                        value:"",
+                        reflectToAttribute:true,
+                        observer:"routeChanged"
+                    },
+                    enabled:{
+                        type:Boolean,
+                        value:false,
+
+                    }
+
+                },
+                routeChanged:function(newValue){
+             
+                    if(newValue==="cartodb"){
+                        this.enabled=true;
+                    }else{
+                        this.enabled=false;
+                    }
+                }
             });
         })();
     </script>

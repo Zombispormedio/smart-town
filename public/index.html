@@ -8,16 +8,14 @@
 
         <title>Smart Town</title>
 
-        
+
         <link rel="stylesheet" href="styles/main.css">
 
 
         <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 
-        <script defer src="bower_components/axios/dist/axios.min.js"></script>
-
         <script defer src="bower_components/lodash/dist/lodash.min.js"></script>
-     
+
 
         <script defer src="scripts/app.js"></script>
 
@@ -73,9 +71,8 @@
                     <iron-pages id="pages" attr-for-selected="data-route" selected="[[route]]">
 
                         <section data-route="home">
-
+                         
                             <main-page route="[[route]]"></main-page>
-
                         </section>
 
                         <section data-route="developer">
@@ -86,7 +83,25 @@
 
                         <section data-route="cartodb">
 
-                            <cartodb-page></cartodb-page>
+                            <cartodb-page route="[[route]]"></cartodb-page>
+
+                        </section>
+                        
+                          <section data-route="charts">
+
+                            <charts-page route="[[route]]"></charts-page>
+
+                        </section>
+                        
+                          <section data-route="google-maps">
+
+                            <google-maps-page></google-maps-page>
+
+                        </section>
+                        
+                          <section data-route="leaflet">
+
+                            <leaflet-page></leaflet-page>
 
                         </section>
 

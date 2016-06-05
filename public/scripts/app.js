@@ -21,9 +21,9 @@
 
     window.addEventListener('paper-header-transform', function(e) {
         if(app.route==="home"){
-             animateCondense(e.detail);
+            animateCondense(e.detail);
         }
-       
+
     });
 
 
@@ -56,5 +56,8 @@
     app.scrollPageToTop = function() {
         app.$.headerPanelMain.scrollToTop(true);
     };
+
+ 
+
 
 })(document);

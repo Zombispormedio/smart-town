@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
+<script  src="../../bower_components/axios/dist/axios.min.js"></script>
 
 <script>
 
@@ -16,7 +16,7 @@
 
         this.env=location.hostname==="localhost"?"dev":"prod";
         //this.env="prod";
-        
+
 
         this.prod={
             protocol:"https",
@@ -69,10 +69,10 @@
             if(_then)request=request.then(function(res){
                 var data=res.data;
                 if(!data.success && _catch){
-                   return _catch(data.errors);
+                    return _catch(data.errors);
                 }
-                    _then(data);
-                
+                _then(data);
+
             });
 
             if(_catch)request.catch(function(res){
@@ -107,7 +107,7 @@
 
             });
 
-        
+
 
             var p=self.getPath(path);
             var request =axios.post(p, body);
@@ -115,20 +115,20 @@
             if(_then)request=request.then(function(res){
                 var data=res.data;
                 if(!data.success && _catch){
-                   return _catch(data.errors);
+                    return _catch(data.errors);
                 }
-                    _then(data);
+                _then(data);
             });
 
             if(_catch)request.catch(function(res){
-                 var data={};
+                var data={};
                 if(res.data)data=res.data;
                 _catch(data.errors||data);
             });
         }
 
         Behaviour.prototype = {};
-        
+
 
         return Object.create(Behaviour.prototype, {
             env:secure(self.env),
@@ -140,7 +140,7 @@
 
             GET:secure(self.GET),
             POST:secure(self.POST),
-         
+
 
         });
 
