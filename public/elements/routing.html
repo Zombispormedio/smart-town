@@ -71,7 +71,20 @@
             cartodb:[{
                 id:"pages",
                 classes:["cartodb-main"]
+            }],
+            charts:[{
+                id:"pages",
+                classes:["charts-main"]
+            }],
+            leaflet:[{
+                id:"pages",
+                classes:["leaflet-main"]
+            }],
+            "google-maps":[{
+                id:"pages",
+                classes:["google-maps-main"]
             }]
+
         }
 
 
@@ -131,10 +144,32 @@
 
         var CartoDB=function() {
             app.route = 'cartodb';
-            app.setTitle("CartoDB Example");
+            app.setTitle("CartoDB");
 
             CleanAndAddRouteClasses(app.route);
         };
+
+        var Charts=function() {
+            app.route = 'charts';
+            app.setTitle("Charts");
+
+            CleanAndAddRouteClasses(app.route);
+        };
+
+        var Leaflet=function() {
+            app.route = 'leaflet';
+            app.setTitle("Leaflet");
+
+            CleanAndAddRouteClasses(app.route);
+        };
+
+        var GoogleMaps=function() {
+            app.route = 'google-maps';
+            app.setTitle("Google Maps");
+
+            CleanAndAddRouteClasses(app.route);
+        };
+
 
 
 
@@ -151,6 +186,9 @@
         page('/developer', Fixed, Developer);
 
         page('/cartodb', Fixed, CartoDB);
+        page('/charts', Fixed, Charts);
+        page('/leaflet', Fixed, Leaflet);
+        page('/google-maps', Fixed, GoogleMaps);
 
         page({
             hashbang: true
