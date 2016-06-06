@@ -1,21 +1,30 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/google-chart/google-chart.html">
+<link rel="import" href="../num-sensors-by-magnitude/num-sensors-by-magnitude.html">
+<link rel="import" href="../num-grids-by-zone/num-grids-by-zone.html">
 
-<link rel="import" href="../api-behaviour/api-behaviour.html">
+
 
 
 <dom-module id="charts-page">
 
     <template>
         <style>
-
+            .flex-equal-justified {
+                @apply(--layout-horizontal);
+                @apply(--layout-justified);
+            }
+            num-grids-by-zone{
+                margin-left: 3%;
+            }
         </style>
-        <google-chart
-                      type='pie'
-                      options='{"title": "Distribution of days in 2001Q1"}'
-                      cols='[{"label":"Month", "type":"string"}, {"label":"Days", "type":"number"}]'
-                      rows='[["Jan", 31],["Feb", 28],["Mar", 31]]'>
-        </google-chart>
+
+        <div class="flex-equal-justified">
+            <num-sensors-by-magnitude></num-sensors-by-magnitude>
+            <num-grids-by-zone></num-grids-by-zone>
+        </div>
+
+
+
     </template>
 
     <script>
@@ -42,8 +51,6 @@
 
 
                 }
-
-
 
 
             });

@@ -1,0 +1,104 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/google-chart/google-chart.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../api-behaviour/api-behaviour.html">
+
+
+<dom-module id="num-sensors-by-magnitude">
+
+    <template>
+        <style>
+            :host{
+                --chart-width:650px;
+            }
+            
+            google-chart {
+                height: 400px;
+                width: var(--chart-width);
+            }
+            
+            paper-material{
+                width: var(--chart-width);
+            }
+        </style>
+
+        <iron-ajax id="ajax"
+
+                   url="[[path]]"
+                   params='{{params}}'
+                   handle-as="json"
+                   on-response="handleResponse"
+                   debounce-duration="300"></iron-ajax>
+
+
+
+        <paper-material elevation="1">
+            <google-chart
+                          type='pie'
+                          options='{"title": "Number of Sensors by Magnitude", "is3D":true}'
+                          cols='[{"label":"Magnitude", "type":"string"}, {"label":"Number of Sensors", "type":"number"}]'
+                          rows='{{data}}'>
+            </google-chart>
+
+        </paper-material>
+    </template>
+
+    <script>
+        (function() {
+            'use strict';
+
+            Polymer({
+                is: 'num-sensors-by-magnitude',
+                created:function(){
+                    this.API=Polymer.APIBehaviour();
+                },
+                properties:{
+                    path:{
+                        type:String,
+                        value:""
+                    },
+                    params:{
+                        type:Object
+                    },
+                    data:{
+                        type:Array,
+                        value:[["Magnitude", 100]]
+                    }
+
+                },
+                handleResponse:function(ev){
+                    var res=ev.target.lastResponse;
+                    if(!res.success){
+                        return console.log(res);
+                    }
+                    var magnitudes=res.result;
+
+                    var total_sensors=_.sumBy(magnitudes, function(o){return o.num_sensors});
+
+                    this.data=magnitudes.map(function(item){
+                        var s_stat=(item.num_sensors/total_sensors)*100;
+                        return [item.display_name, s_stat];
+                    });
+                    this.update();
+                    
+                },
+                update:function(){
+                  this.async(function(){
+                      this.$.ajax.generateRequest();
+                  }, 50000);  
+                },
+                ready:function(){
+                    this.path=this.API.getPath("magnitudes");
+                    this.params={
+                        apiKey:this.API.Key
+                    };
+
+                    this.$.ajax.generateRequest();
+
+                }
+
+            });
+        })();
+    </script>
+</dom-module>

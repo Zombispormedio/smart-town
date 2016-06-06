@@ -1,0 +1,120 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/google-chart/google-chart.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../api-behaviour/api-behaviour.html">
+
+
+<dom-module id="num-grids-by-zone">
+
+    <template>
+        <style>
+            :host{
+                --chart-width:650px;
+            }
+            
+            google-chart {
+                height: 400px;
+                width: var(--chart-width);
+            }
+            
+            paper-material{
+                width: var(--chart-width);
+            }
+        </style>
+
+        <iron-ajax id="ajax"
+
+                   url="[[path]]"
+                   params='{{params}}'
+                   handle-as="json"
+                   on-response="handleResponse"
+                   debounce-duration="300"></iron-ajax>
+
+
+
+        <paper-material elevation="1">
+            <google-chart
+                          type='column'
+                          options='{{options}}'
+                          
+                          data='{{data}}'>
+            </google-chart>
+
+        </paper-material>
+    </template>
+
+    <script>
+        (function() {
+            'use strict';
+
+            Polymer({
+                is: 'num-grids-by-zone',
+                created:function(){
+                    this.API=Polymer.APIBehaviour();
+                },
+                properties:{
+                    path:{
+                        type:String,
+                        value:""
+                    },
+                    params:{
+                        type:Object
+                    },
+                    data:{
+                        type:Array,
+                        value:[["Zone", 100]]
+                    },
+                    options:{
+                        type:Object,
+                        value:{"title": "Number of Grids by Zone"}
+                    }
+                    
+
+                },
+                handleResponse:function(ev){
+                    var res=ev.target.lastResponse;
+                    if(!res.success){
+                        return console.log(res);
+                    }
+                    var zones=res.result;
+
+                   var d=[["Zone","Number of Grids", {"role":"style"}]];
+                    var self=this;
+
+                    this.data=zones.reduce(function(prev, item, index){
+                        var s_stat=item.num_grids;
+                        var i=index%self.colors.length;
+                        var color=self.colors[i];
+                        prev.push([item.display_name, s_stat, color]);
+                        return prev;
+                    }, d);
+                  this.update();
+                },
+                update:function(){
+                  this.async(function(){
+                      this.$.ajax.generateRequest();
+                  }, 50000);  
+                },
+                
+                ready:function(){
+                    this.path=this.API.getPath("zones");
+                    this.params={
+                        apiKey:this.API.Key,
+                        no_shape:true
+                    };
+                    
+                    this.colors=Array.apply(0, Array(20)).map(function(){
+                        return chance.color({format: 'hex'});
+                    });
+                    
+                    this.options.colors=this.colors;
+
+                    this.$.ajax.generateRequest();
+
+                }
+
+            });
+        })();
+    </script>
+</dom-module>
