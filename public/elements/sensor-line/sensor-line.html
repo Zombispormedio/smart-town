@@ -5,7 +5,7 @@
 <link rel="import" href="../api-behaviour/api-behaviour.html">
 
 
-<dom-module id="word-tree">
+<dom-module id="sensor-line">
 
     <template>
         <style>
@@ -36,9 +36,10 @@
 
         <paper-material elevation="1">
             <google-chart
-                          type="treemap"
+                          type="line"
                           options='{{options}}'
-                          data='{{data}}'>
+                           cols='{{cols}}'
+                     rows='{{data}}'>
             </google-chart>
 
         </paper-material>
@@ -49,7 +50,7 @@
             'use strict';
 
             Polymer({
-                is: 'word-tree',
+                is: 'sensor-line',
                 created:function(){
                     this.API=Polymer.APIBehaviour();
                 },
@@ -63,23 +64,17 @@
                     },
                     data:{
                         type:Array,
-                        value:[["Location", "Parent", "Value"], ['Smart Town', null,0]]
+                        value:[]
+                    },
+                     cols:{
+                        type:Array,
+                        value:[]
                     },
                     options:{
                         type:Object,
                         value:{
-                            "title": "Smart Town Tree",
-                            highlightOnMouseOver: true,
-                            maxDepth: 1,
-                            maxPostDepth: 2,
-                            minColor: '#FF9800',
-                            midColor: '#FFB74D',
-                            maxColor: '#FFE0B2',
-                            headerHeight: 15,
-                            showScale: true,
-                            height: 500,
-                            width:650,
-                            useWeightedAverageForAggregation: true
+                          
+                           
                         }
                     }
 
@@ -90,33 +85,23 @@
                     if(!res.success){
                         return console.log(res);
                     }
-                    var tree=res.result;
-
-                    var d=[["Location", "Parent", "Value"], ['Global', null,0]];
-
-                    tree.forEach(function(zone){
-                        d.push([zone.display_name, "Global", 0])
+                    
+                    if(res.result.length===0){
+                        return console.log("No results sensor-line");
+                    }
+                    
+                    var raw=res.result[0];
+                    this.cols=[{"label":"Hour", "type":"number"}, {"label":raw.magnitude.display_name, "type":"number"}];
+                    
+                    this.options.title="Average of "+raw.magnitude.display_name+" using "+raw.device_name+" during a day";
+                   raw.stats= _.sortBy(raw.stats, function(o) { return o.hour; });
+                    console.log(raw.stats)
+                    
+                    this.data=raw.stats.map(function(item){
+                        return [item.hour, item.avg_value]
                     });
-
-                    tree.forEach(function(zone){
-                        var parent=zone.display_name;
-
-                        zone.grids.forEach(function(grid){
-                            var grid_count=grid.count_registry===0?chance.integer({min: 20, max: 100}):grid.count_registry;
-                            d.push([grid.display_name, parent, grid_count])
-
-                            grid.sensors.forEach(function(sensor){
-                                var sensor_count=sensor.count_registry===0?chance.integer({min: 20, max: 100}):sensor.count_registry;
-                                d.push([sensor.display_name, grid.display_name, sensor_count])
-                            });
-
-
-                        });
-
-                    })
-
-                    this.data=d;
-                    this.update();
+                   
+                   // this.update();
                 },
                 update:function(){
                     this.async(function(){
@@ -125,9 +110,11 @@
                 },
 
                 ready:function(){
-                    this.path=this.API.getPath("tree");
+                    this.path=this.API.getPath("stats_by_sensor/1");
                     this.params={
-                        apiKey:this.API.Key
+                        apiKey:this.API.Key,
+                        type:"hour",
+                        onlyRefs:"false"
                     };
 
 
