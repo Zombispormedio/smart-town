@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../num-sensors-by-magnitude/num-sensors-by-magnitude.html">
 <link rel="import" href="../num-grids-by-zone/num-grids-by-zone.html">
-
+<link rel="import" href="../word-tree/word-tree.html">
 
 
 
@@ -16,11 +16,18 @@
             num-grids-by-zone{
                 margin-left: 3%;
             }
+            .no-first{
+                margin-top: 3.5%;
+            }
         </style>
 
         <div class="flex-equal-justified">
             <num-sensors-by-magnitude></num-sensors-by-magnitude>
             <num-grids-by-zone></num-grids-by-zone>
+        </div>
+        <div class="no-first flex-equal-justified">
+            <word-tree></word-tree>
+            
         </div>
 
 

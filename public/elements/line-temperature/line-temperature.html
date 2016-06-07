@@ -5,20 +5,21 @@
 <link rel="import" href="../api-behaviour/api-behaviour.html">
 
 
-<dom-module id="num-grids-by-zone">
+<dom-module id="word-tree">
 
     <template>
         <style>
             :host{
                 --chart-width:650px;
             }
-            
+
             google-chart {
-                height: 400px;
+                height: 500px;
                 width: var(--chart-width);
             }
-            
+
             paper-material{
+                height: 500px;
                 width: var(--chart-width);
             }
         </style>
@@ -35,9 +36,8 @@
 
         <paper-material elevation="1">
             <google-chart
-                          type='column'
+                          type="treemap"
                           options='{{options}}'
-                          
                           data='{{data}}'>
             </google-chart>
 
@@ -49,7 +49,7 @@
             'use strict';
 
             Polymer({
-                is: 'num-grids-by-zone',
+                is: 'word-tree',
                 created:function(){
                     this.API=Polymer.APIBehaviour();
                 },
@@ -63,16 +63,26 @@
                     },
                     data:{
                         type:Array,
-                        value:[]
+                        value:[["Location", "Parent", "Value"], ['Smart Town', null,0]]
                     },
                     options:{
                         type:Object,
                         value:{
-                            "title": "Number of Grids by Zone",
-                            
+                            "title": "Smart Town Tree",
+                            highlightOnMouseOver: true,
+                            maxDepth: 1,
+                            maxPostDepth: 2,
+                            minColor: '#FF9800',
+                            midColor: '#FFB74D',
+                            maxColor: '#FFE0B2',
+                            headerHeight: 15,
+                            showScale: true,
+                            height: 500,
+                            width:650,
+                            useWeightedAverageForAggregation: true
                         }
                     }
-                    
+
 
                 },
                 handleResponse:function(ev){
@@ -80,38 +90,47 @@
                     if(!res.success){
                         return console.log(res);
                     }
-                    var zones=res.result;
+                    var tree=res.result;
 
-                   var d=[["Zone","Number of Grids", {"role":"style"}]];
-                    var self=this;
+                    var d=[["Location", "Parent", "Value"], ['Global', null,0]];
 
-                    this.data=zones.reduce(function(prev, item, index){
-                        var s_stat=item.num_grids;
-                        var i=index%self.colors.length;
-                        var color=self.colors[i];
-                        prev.push([item.display_name, s_stat, color]);
-                        return prev;
-                    }, d);
-                  this.update();
+                    tree.forEach(function(zone){
+                        d.push([zone.display_name, "Global", 0])
+                    });
+
+                    tree.forEach(function(zone){
+                        var parent=zone.display_name;
+
+                        zone.grids.forEach(function(grid){
+                            var grid_count=grid.count_registry===0?chance.integer({min: 20, max: 100}):grid.count_registry;
+                            d.push([grid.display_name, parent, grid_count])
+
+                            grid.sensors.forEach(function(sensor){
+                                var sensor_count=sensor.count_registry===0?chance.integer({min: 20, max: 100}):sensor.count_registry;
+                                d.push([sensor.display_name, grid.display_name, sensor_count])
+                            });
+
+
+                        });
+
+                    })
+
+                    this.data=d;
+                    this.update();
                 },
                 update:function(){
-                  this.async(function(){
-                      this.$.ajax.generateRequest();
-                  }, 5000);  
+                    this.async(function(){
+                        this.$.ajax.generateRequest();
+                    }, 50000);  
                 },
-                
+
                 ready:function(){
-                    this.path=this.API.getPath("zones");
+                    this.path=this.API.getPath("tree");
                     this.params={
-                        apiKey:this.API.Key,
-                        no_shape:true
+                        apiKey:this.API.Key
                     };
-                    
-                    this.colors=Array.apply(0, Array(20)).map(function(){
-                        return chance.color({format: 'hex'});
-                    });
-                    
-                    this.options.colors=this.colors;
+
+
 
                     this.$.ajax.generateRequest();
 

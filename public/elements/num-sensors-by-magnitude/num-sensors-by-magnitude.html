@@ -15,7 +15,7 @@
             
             google-chart {
                 height: 400px;
-                width: var(--chart-width);
+               width: var(--chart-width);
             }
             
             paper-material{
@@ -86,7 +86,7 @@
                 update:function(){
                   this.async(function(){
                       this.$.ajax.generateRequest();
-                  }, 50000);  
+                  }, 5000);  
                 },
                 ready:function(){
                     this.path=this.API.getPath("magnitudes");
