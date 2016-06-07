@@ -95,13 +95,13 @@
                     
                     this.options.title="Average of "+raw.magnitude.display_name+" using "+raw.device_name+" during a day";
                    raw.stats= _.sortBy(raw.stats, function(o) { return o.hour; });
-                    console.log(raw.stats)
+                   
                     
                     this.data=raw.stats.map(function(item){
                         return [item.hour, item.avg_value]
                     });
                    
-                   // this.update();
+                    this.update();
                 },
                 update:function(){
                     this.async(function(){
