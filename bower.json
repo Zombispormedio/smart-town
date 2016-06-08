@@ -27,7 +27,8 @@
     "axios": "^0.11.0",
     "Chart.js": "^2.1.4",
     "google-chart": "GoogleWebComponents/google-chart#^1.0.4",
-    "chance": "^1.0.3"
+    "chance": "^1.0.3",
+    "leaflet-map": "^1.2.0"
   },
   "resolutions": {
     "webcomponentsjs": "^0.7.20",
