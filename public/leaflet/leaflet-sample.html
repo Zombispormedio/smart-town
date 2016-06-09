@@ -1,0 +1,121 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/leaflet-map/leaflet-map.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../elements/api-behaviour/api-behaviour.html">
+
+
+
+<dom-module id="leaflet-sample">
+    <template>
+        <style>
+            :host { display: block; overflow: hidden} 
+            :host leaflet-map {height:31em; width:100%; border: none}
+        </style>
+        <iron-ajax id="ajax"
+                   url="[[path]]"
+                   params='{{params}}'
+                   handle-as="json"
+                   on-response="handleResponse"
+                   debounce-duration="300"></iron-ajax>
+
+        <leaflet-map zoom="3">
+            <leaflet-tilelayer 
+                               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" max-zoom="19">
+                Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contr., 
+                <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, 
+                Imagery © <a href="http://mapbox.com">Mapbox</a>
+            </leaflet-tilelayer>
+
+
+
+            <leaflet-geojson color="#FF0000" data="{{data}}"></leaflet-geojson>
+        </leaflet-map>
+
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "leaflet-sample",
+        created:function(){
+            this.API=Polymer.APIBehaviour();
+            L.Icon.Default.imagePath ="../bower_components/leaflet/dist/images/";
+        },
+        properties:{
+            path:{
+                type:String,
+                value:""
+            },
+            params:{
+                type:Object
+            },
+            data:{
+                type:Array,
+                value:[]
+            }
+
+
+        },
+        handleResponse:function(ev){
+            var res=ev.target.lastResponse;
+            if(!res.success){
+                return console.log(res);
+            }
+
+            if(res.features.length===0){
+                return console.log("No results sensor-line");
+            }
+
+            var features=res.features;
+
+
+            var data={
+                type: "FeatureCollection",
+
+            }
+
+            data.features=features.reduce(function(prev, item){
+
+                if(item.geometry.coordinates.length===2){
+                    var obj={
+                        type:item.type,
+                        "properties": {
+                            "name": "Coors Field",
+                            "amenity": "Baseball Stadium",
+                            "popupContent": "This is where the Rockies play!"
+                        },
+                        geometry:item.geometry,
+
+                    }
+                    prev.push(obj);
+
+                }
+
+                return prev; 
+            }, []);
+
+            
+            this.data=data;
+
+        },
+        update:function(){
+            this.async(function(){
+                this.$.ajax.generateRequest();
+            }, 50000);  
+        },
+
+        ready:function(){
+            this.path=this.API.getPath("grids");
+            this.params={
+                apiKey:this.API.Key,
+                format:"geojson",
+                onlyRefs:"false"
+            };
+
+
+
+            this.$.ajax.generateRequest();
+
+        }
+    });
+</script>

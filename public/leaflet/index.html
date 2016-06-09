@@ -1,73 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Smart Town - Leaflet Map</title>
+
+
+        <link rel="stylesheet" href="../styles/main.css">
         <script type="text/javascript" src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
-        <link rel="import" href="../bower_components/polymer/polymer.html">
-        <link rel="import" href="../bower_components/leaflet-map/leaflet-map.html">
-        <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-        <meta charset="UTF-8">
-        <title>Document</title>
-        <style>
-            html, body {
-                margin: 0;
-                height: 100%;
-            }
-            leaflet-map {
-                height: 100%;
-            }
-        </style>
+
+        <link rel="import" href="leaflet-sample.html">
+        <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+        <link rel="import" href="../bower_components/iron-image/iron-image.html">
+        <link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+        <link rel="import" href="../bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+        <link rel="import" href="../bower_components/paper-styles/typography.html">
+        <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+        <link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+        <link rel="import" href="../styles/app-theme.html">
+        <link rel="import" href="../styles/shared-styles.html">
+
+        <style is="custom-style" include="shared-styles"></style>
+
     </head>
-    <body>
-        <dom-module id="geolocation-sample">
-            <template>
-                <style>
-                    :host { display: block; overflow: hidden} 
-                    :host leaflet-map {height:18em; width:99%; border: none}
-                </style>
+    <body unresolved>
 
 
-                <template is="dom-if" if="{{!latitude}}">
-                    Location Unknown.
-                </template>
+        <paper-scroll-header-panel id="headerPanelMain" fixed>
 
-                <template is="dom-if" if="{{latitude}}">
-                    lat: <span>{{latitude}}</span>, 
-                    lng: <span>{{longitude}}</span>, 
-                    accuracy: <span>{{accuracy}}</span> meter
-                </template>
+            <paper-toolbar id="mainToolbar" bottom-justify="center" middle-justify="center">
+                <div class="top top-container flex-horizontal">
 
+                    <div id="mainLogo">
+                        <a href="/">
+                            <iron-image src="../assets/images/house_with_garden_36.png"></iron-image>
 
-                <leaflet-map>
+                            <span style="font-size: 1.5em;">HOME</span> 
 
+                            <paper-ripple class="circle"></paper-ripple>
+                        </a>
+                    </div>
 
-                    <leaflet-geolocation enable-high-accuracy latitude="{{latitude}}" longitude="{{longitude}}" accuracy="{{accuracy}}"></leaflet-geolocation>
-
-
-
-                    <template is="dom-if" if="{{latitude}}">
-                        <leaflet-marker latitude="{{latitude}}" longitude="{{longitude}}">
-                            I am within <span>{{accuracy}}</span> meters of this location.
-                        </leaflet-marker>
-
-                        <leaflet-circle latitude="{{latitude}}" longitude="{{longitude}}"
-                                        radius="{{accuracy}}"color="#d00">
-                        </leaflet-circle>
-
-                    </template>
-
-                </leaflet-map>
-
-            </template>
-        </dom-module>
-
-        <script>
-            Polymer({
-                is: "geolocation-sample"
-            });
-        </script>
+                    <div class="flex"></div>
 
 
-        <geolocation-sample> </geolocation-sample>
+                    <paper-button raised class="buttonToolbar yellow">
+                        <a href="/#!/developer">  Get Your Api Key</a>
+                    </paper-button>
+
+
+                </div>
+
+                <div id="mainTitleContainer" class="middle middle-container">
+                    <div id="mainTitle" class="app-name hide">Smart Town</div>
+                </div>
+
+
+                <div id="mainSubtitleContainer" class="bottom bottom-container">
+                    <div id="mainSubtitle" class="bottom-title plenty">The future of Smart Cities (or something)</div>
+                </div>
+
+            </paper-toolbar>
+
+
+            <div class="content">
+
+                <leaflet-sample> </leaflet-sample>
+
+
+                <footer class="container flex-end-justified">
+                    <div class="end">
+                        <h6>
+                            <iron-icon icon="icons:copyright"></iron-icon>
+                            Smart Town 2016
+                        </h6>
+                    </div>
+                </footer>
+            </div>
+        </paper-scroll-header-panel>
 
     </body>
 
