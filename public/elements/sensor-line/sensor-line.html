@@ -106,7 +106,7 @@
                 update:function(){
                     this.async(function(){
                         this.$.ajax.generateRequest();
-                    }, 50000);  
+                    }, this.API.time);  
                 },
 
                 ready:function(){

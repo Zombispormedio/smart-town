@@ -28,7 +28,8 @@
     "Chart.js": "^2.1.4",
     "google-chart": "GoogleWebComponents/google-chart#^1.0.4",
     "chance": "^1.0.3",
-    "leaflet-map": "^1.2.0"
+    "leaflet-map": "^1.2.0",
+    "google-map": "GoogleWebComponents/google-map#^1.1.10"
   },
   "resolutions": {
     "webcomponentsjs": "^0.7.20",
