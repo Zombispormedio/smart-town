@@ -41,8 +41,6 @@ describe('Bower packages', function() {
 				  done();
 		  
 	  });
-	  
-	  
     });
   });
 });
