@@ -49,11 +49,26 @@
                         reflectToAttribute:true,
                         observer:"routeChanged"
                     },
+                    
+                    enabled:{
+                        type:Boolean,
+                        value:false,
+                     
+                        observer:"enabledChanged"
+                    },
                 },
 
-                routeChanged:function(){
-
+                routeChanged:function(newValue){
+                   if(newValue==="charts"){
+                        this.enabled=true;
+                    }else{
+                       this.enabled=false;
+                    }
                 },
+                enabledChanged:function(newValue){
+                    console.log(newValue);
+                },
+                
                 ready:function(){
 
 
