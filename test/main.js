@@ -12,12 +12,12 @@ describe('Array', function() {
 
 describe('Images', function() {
   describe('#google-maps()', function() {
-    it('should be image about google-maps', function(done) {
+    it('should be image about googlemaps', function(done) {
       
 	  fs.readdir("public/assets/images", function(err, files){
 		    if (err) throw err;
 			
-			      assert.notEqual(-1, files.indexOf(0), files.toString());
+			      assert.notEqual(-1, files.indexOf("googlemaps.png"), "Files: "+files.toString());
 				  done();
 		  
 	  });
