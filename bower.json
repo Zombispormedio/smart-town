@@ -35,6 +35,6 @@
      "google-chart": "GoogleWebComponents/google-chart#^1.0.4",
     "webcomponentsjs": "^0.7.20",
     "iron-component-page": "^1.0.0",
-    "polymer": "^1.5.0",
+    "polymer": "^1.5.0"
   }
 }
