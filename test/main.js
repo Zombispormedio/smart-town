@@ -29,5 +29,25 @@ describe('Images', function() {
 
 
 
+describe('Bower packages', function() {
+  describe('#google-charts version', function() {
+    it('should be 1.0.4', function(done) {
+      
+	  fs.readFile("public/bower_components/google-chart/bower.json", function(err, file){
+		    if (err) throw err;
+			    var content=file.toString();
+          var bower_config=JSON.parse(content);
+			      assert.equal("1.0.4", bower_config.version, "Version is: "+bower_config.version);
+				  done();
+		  
+	  });
+	  
+	  
+    });
+  });
+});
+
+
+
 
 console.log("[TEST] Checked")
