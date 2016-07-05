@@ -22,7 +22,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "devstart": "supervisor server.js",
-    "postinstall": "node ./node_modules/bower/bin/bower install --force-latest"
+    "postinstall": "node ./node_modules/bower/bin/bower install"
   },
   "repository": {
     "type": "git",
