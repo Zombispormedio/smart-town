@@ -16,7 +16,7 @@
     "morgan": "1.0.1"
   },
   "devDependencies": {
-    "del": "2.2.0",
+   /* "del": "2.2.0",
     "gulp": "3.9.1",
     "gulp-concat": "2.6.0",
     "gulp-html-extract": "0.1.0",
@@ -28,7 +28,7 @@
     "gulp-sourcemaps": "2.0.0-alpha",
     "gulp-uglify": "1.5.3",
     "gulp-vulcanize": "6.1.0",
-    "vulcanize": "1.14.8",
+    "vulcanize": "1.14.8",*/
 	"chai": "^3.5.0"
   },
   "scripts": {
