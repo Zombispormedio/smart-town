@@ -1,4 +1,5 @@
 var assert = require('chai').assert;
+var fs=require("fs");
 describe('Array', function() {
   describe('#indexOf()', function () {
     it('should return -1 when the value is not present', function () {
@@ -7,4 +8,26 @@ describe('Array', function() {
     });
   });
 });
+
+
+describe('Images', function() {
+  describe('#google-maps()', function() {
+    it('should be image about google-maps', function(done) {
+      
+	  fs.readdir("public/assets/images", function(err, files){
+		    if (err) throw err;
+			
+			      assert.notEqual(-1, files.indexOf(0));
+				  done();
+		  
+	  });
+	  
+	  
+    });
+  });
+});
+
+
+
+
 console.log("[TEST] Checked")
