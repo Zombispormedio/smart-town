@@ -23,12 +23,12 @@
         </style>
 
         <div class="flex-equal-justified">
-            <num-sensors-by-magnitude></num-sensors-by-magnitude>
-            <num-grids-by-zone></num-grids-by-zone>
+            <num-sensors-by-magnitude enabled="{{enabled}}"></num-sensors-by-magnitude>
+            <num-grids-by-zone enabled="{{enabled}}"></num-grids-by-zone>
         </div>
         <div class="no-first flex-equal-justified">
-            <word-tree></word-tree>
-            <sensor-line></sensor-line>
+            <word-tree enabled="{{enabled}}"></word-tree>
+            <sensor-line enabled="{{enabled}}"></sensor-line>
         </div>
 
 
@@ -52,9 +52,7 @@
                     
                     enabled:{
                         type:Boolean,
-                        value:false,
-                     
-                        observer:"enabledChanged"
+                        value:false
                     },
                 },
 
@@ -65,9 +63,7 @@
                        this.enabled=false;
                     }
                 },
-                enabledChanged:function(newValue){
-                    console.log(newValue);
-                },
+               
                 
                 ready:function(){
 

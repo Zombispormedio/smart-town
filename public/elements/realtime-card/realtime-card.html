@@ -157,8 +157,11 @@
 
                 handleResponse:function(ev){
                     var data=ev.target.lastResponse;
+                    if(!data){
+                        return console.warn(ev);
+                    }
                     if(!data.success){
-                        return console.log(data);
+                        return console.warn(data);
                     }
 
                     var node=data.result[0];

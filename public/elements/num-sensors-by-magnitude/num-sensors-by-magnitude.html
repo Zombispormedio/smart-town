@@ -12,12 +12,12 @@
             :host{
                 --chart-width:650px;
             }
-            
+
             google-chart {
                 height: 400px;
-               width: var(--chart-width);
+                width: var(--chart-width);
             }
-            
+
             paper-material{
                 width: var(--chart-width);
             }
@@ -64,8 +64,26 @@
                     data:{
                         type:Array,
                         value:[["Magnitude", 100]]
+                    },
+                    enabled:{
+                        type:Boolean,
+                        value:false,
+                        reflectToAttribute: true,
+                        notify:true
+
                     }
 
+                },
+                observers:[
+                    'enabledChanged(enabled)'
+                ],
+
+                enabledChanged:function(newValue){
+
+                    if(newValue){
+                        console.log("num_sensors")
+                        this.sendRequest();
+                    }
                 },
                 handleResponse:function(ev){
                     var res=ev.target.lastResponse;
@@ -81,20 +99,25 @@
                         return [item.display_name, s_stat];
                     });
                     this.update();
-                    
+
                 },
                 update:function(){
-                  this.async(function(){
-                      this.$.ajax.generateRequest();
-                  }, this.API.time);  
+                    this.async(function(){
+                        this.sendRequest();
+                    }, this.API.time);  
                 },
+                sendRequest:function(){
+                    if(this.enabled)
+                        this.$.ajax.generateRequest();
+
+                },
+
                 ready:function(){
                     this.path=this.API.getPath("magnitudes");
                     this.params={
                         apiKey:this.API.Key
                     };
-
-                    this.$.ajax.generateRequest();
+                    this.sendRequest();
 
                 }
 

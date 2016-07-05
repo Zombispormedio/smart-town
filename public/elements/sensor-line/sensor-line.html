@@ -38,8 +38,8 @@
             <google-chart
                           type="line"
                           options='{{options}}'
-                           cols='{{cols}}'
-                     rows='{{data}}'>
+                          cols='{{cols}}'
+                          rows='{{data}}'>
             </google-chart>
 
         </paper-material>
@@ -66,47 +66,70 @@
                         type:Array,
                         value:[]
                     },
-                     cols:{
+                    cols:{
                         type:Array,
                         value:[]
                     },
                     options:{
                         type:Object,
                         value:{
-                          
-                           
+
+
                         }
+                    },
+                    enabled:{
+                        type:Boolean,
+                        value:false,
+                        reflectToAttribute: true,
+                        notify:true
+
                     }
 
 
+                },
+                observers:[
+                    'enabledChanged(enabled)'
+                ],
+
+                enabledChanged:function(newValue){
+
+                    if(newValue){
+                        console.log("line")
+                        this.sendRequest();
+                    }
                 },
                 handleResponse:function(ev){
                     var res=ev.target.lastResponse;
                     if(!res.success){
                         return console.log(res);
                     }
-                    
+
                     if(res.result.length===0){
                         return console.log("No results sensor-line");
                     }
-                    
+
                     var raw=res.result[0];
                     this.cols=[{"label":"Hour", "type":"number"}, {"label":raw.magnitude.display_name, "type":"number"}];
-                    
+
                     this.options.title="Average of "+raw.magnitude.display_name+" using "+raw.device_name+" during a day";
-                   raw.stats= _.sortBy(raw.stats, function(o) { return o.hour; });
-                   
-                    
+                    raw.stats= _.sortBy(raw.stats, function(o) { return o.hour; });
+
+
                     this.data=raw.stats.map(function(item){
                         return [item.hour, item.avg_value]
                     });
-                   
+
                     this.update();
                 },
                 update:function(){
                     this.async(function(){
-                        this.$.ajax.generateRequest();
+                        this.sendRequest();
                     }, this.API.time);  
+                },
+                sendRequest:function(){
+                    if(this.enabled)
+                        this.$.ajax.generateRequest();
+
                 },
 
                 ready:function(){
@@ -118,8 +141,7 @@
                     };
 
 
-
-                    this.$.ajax.generateRequest();
+                    this.sendRequest();
 
                 }
 

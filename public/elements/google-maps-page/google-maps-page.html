@@ -47,19 +47,48 @@
                     long:{
                         type:Number,
                         value:0 
+                    },
+                    route:{
+                        type:String,
+                        value:"",
+                        reflectToAttribute:true,
+                        observer:"routeChanged"
+                    },
+                    enabled:{
+                        type:Boolean,
+                        value:false
                     }
                 }, 
+                routeChanged:function(newValue){
+                    if(newValue==="google-maps"){
+                        this.enabled=true; 
+                        this.sendRequest();
+                    }else{
+                        this.enabled=false;   
+                    }
+
+                },
+
+                sendRequest:function(){
+                    if(this.enabled)
+                        this.$.ajax.generateRequest();
+
+                },
                 handleResponse:function(ev){
                     var res=ev.target.lastResponse;
+                     if(!res){
+                        return console.warn(ev);
+                    }
+
                     if(!res.success){
-                        return console.log(res);
+                        return console.warn(res);
                     }
 
                     if(res.features.length===0){
-                        return console.log("No results geojson");
+                        return console.warn("No results geojson");
                     }
 
-                   
+
 
                     this.applyGeoJSON(res);
 
@@ -68,18 +97,18 @@
                 },
                 mapDataLen:function(data){
                     var l=0;
-                     data.forEach(function() {
-                       l++;
+                    data.forEach(function() {
+                        l++;
                     });
-                    
+
                     return l;
                 },
-                
+
                 removeNotFeaturesInGeoJSON:function(geojson, data){
                     var refs=geojson.features.map(function(item){
                         return item.properties.ref;
                     });
-                    
+
                     data.forEach(function(feature){
                         if(!_.find(refs, function(o){
                             return o==feature.getProperty("ref");
@@ -90,51 +119,51 @@
                 },
                 getFeatureByRef(ref, data){
                     var feature;
-                    
-                    
+
+
                     data.forEach(function(f){
-                        
+
                         if(f.getProperty("ref")===ref){
                             feature=f;
                         }
-                        
+
                     });
-                    
-                    
+
+
                     return feature;
                 },
-                
+
                 updateOrCreateFeatures:function(geojson, data){
                     var self=this;
                     geojson.features.forEach(function(item){
                         var feature=self.getFeatureByRef(item.properties.ref, data);
                         if(feature){
-                            
+
                             Object.keys(item.properties).forEach(function(key){
                                 var g=item.properties[key];
                                 feature.setProperty(key, g);
                             });
-                            
+
                             var f_geom=feature.getGeometry().get();
                             var i_coords=item.geometry.coordinates;
-                          
+
                             if(f_geom.lat()!==i_coords[1]|| f_geom.lng()!==i_coords[0]){
                                 console.log("hello");
                                 var point=new google.maps.Data.Point({lat:i_coords[1], lng:i_coords[0]});
                                 feature.setGeometry(point);
                             }
-                            
-                            
+
+
                         }else{
                             data.addGeoJson(item);
                         }
-                        
-                        
+
+
                     });
-                    
-                    
+
+
                 },
-                
+
                 applyGeoJSON:function(geojson){
                     var map=this.$.map.map;
 
@@ -142,26 +171,26 @@
                         var data=map.data;
                         this.removeNotFeaturesInGeoJSON(geojson, data);
                         this.updateOrCreateFeatures(geojson, data);
-                        
-                        
+
+
                     }else{
                         map.data.addGeoJson(geojson);
                     }
 
-                    
+
                 },
 
 
                 update:function(){
                     this.async(function(){
-                        this.$.ajax.generateRequest();
+                        this.sendRequest();
                     }, this.API.time);  
                 },
                 setPosition:function(pos){
                     var coords=pos.coords;
                     this.lat=coords.latitude;
                     this.long=coords.longitude;
-                    this.$.ajax.generateRequest();
+                    this.sendRequest();
                 },
                 error:function(error){
                     console.log(error);
@@ -185,7 +214,7 @@
                     };
                     var successMap=(function(e) {
                         var map=e.target.map;
-                    
+
                         map.data.addListener('click', function(event) {
                             var infowindow = new google.maps.InfoWindow();
                             var feature=event.feature;
@@ -193,12 +222,12 @@
                             var current=feature.getProperty("current");
                             var value="<p>Current Value: "+current.value+"</p>";
                             var d=new Date(current.timestamp);
-                            
-                              var date="<p>Last Sync: "+(d.toString()!=="Invalid Date"?d:current.timestamp)+"</p>";
-                            
+
+                            var date="<p>Last Sync: "+(d.toString()!=="Invalid Date"?d:current.timestamp)+"</p>";
+
                             infowindow.setContent("<div style='width:200px;'>"+name+value+date+"</div>");
                             var position=event.feature.getGeometry().get();
-                           
+
                             infowindow.setPosition(position);
                             infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
 

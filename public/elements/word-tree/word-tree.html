@@ -81,9 +81,28 @@
                             width:650,
                             useWeightedAverageForAggregation: true
                         }
+                    },
+                    enabled:{
+                        type:Boolean,
+                        value:false,
+                        reflectToAttribute: true,
+                        notify:true
+
                     }
 
 
+
+                },
+                observers:[
+                    'enabledChanged(enabled)'
+                ],
+
+                enabledChanged:function(newValue){
+
+                    if(newValue){
+                        console.log("tree")
+                        this.sendRequest();
+                    }
                 },
                 handleResponse:function(ev){
                     var res=ev.target.lastResponse;
@@ -120,10 +139,14 @@
                 },
                 update:function(){
                     this.async(function(){
-                        this.$.ajax.generateRequest();
+                        this.sendRequest();
                     }, this.API.time);  
                 },
+                sendRequest:function(){
+                    if(this.enabled)
+                        this.$.ajax.generateRequest();
 
+                },
                 ready:function(){
                     this.path=this.API.getPath("tree");
                     this.params={
@@ -132,7 +155,7 @@
 
 
 
-                    this.$.ajax.generateRequest();
+                    this.sendRequest();
 
                 }
 
