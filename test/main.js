@@ -37,7 +37,7 @@ describe('Bower packages', function() {
 		    if (err) throw err;
 			    var content=file.toString();
           var bower_config=JSON.parse(content);
-			      assert.equal("1.0.4", bower_config.version, "Version is: "+bower_config.version);
+			      assert.equal("1.0.4", bower_config.version);
 				  done();
 		  
 	  });
