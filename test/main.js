@@ -17,7 +17,7 @@ describe('Images', function() {
 	  fs.readdir("public/assets/images", function(err, files){
 		    if (err) throw err;
 			
-			      assert.notEqual(-1, files.indexOf(0));
+			      assert.notEqual(-1, files.indexOf(0), files.toString());
 				  done();
 		  
 	  });
