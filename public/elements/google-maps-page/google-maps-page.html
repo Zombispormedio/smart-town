@@ -148,7 +148,7 @@
                             var i_coords=item.geometry.coordinates;
 
                             if(f_geom.lat()!==i_coords[1]|| f_geom.lng()!==i_coords[0]){
-                                console.log("hello");
+                               
                                 var point=new google.maps.Data.Point({lat:i_coords[1], lng:i_coords[0]});
                                 feature.setGeometry(point);
                             }
