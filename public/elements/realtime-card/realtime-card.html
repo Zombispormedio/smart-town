@@ -78,7 +78,7 @@
                     },
                     params:{
                         type:Object,
-                        computed:"getParams(onlyRefs, lat, long, magnitude)"
+                        computed:"getParams(onlyRefs, lat, long, magnitude, distance)"
                     },
                     value:{
                         type:Number,
@@ -107,6 +107,10 @@
                         reflectToAttribute: true,
                         notify:true
 
+                    },
+                    distance:{
+                        type:Number,
+                        value:1
                     }
                 },
                 
@@ -127,15 +131,18 @@
                     }
                     return this.API.getPath(p);
                 },
-                getParams:function(onlyRefs, lat, long, magnitude){
+                getParams:function(onlyRefs, lat, long, magnitude, distance){
                     var obj={
                         apiKey:this.API.Key,
                         size:1,
-                        onlyRefs:onlyRefs
+                        onlyRefs:onlyRefs,
+                        max_distance:distance
                     };
                     if(lat!==0 && long !==0){
                         obj.near=[long, lat].join(",");
                     }
+                    
+                    
 
                     if(this.magnitude>0){
                         obj.magnitude=magnitude;
@@ -162,6 +169,11 @@
                     }
                     if(!data.success){
                         return console.warn(data);
+                    }
+                    
+                    if(data.result.length===0){
+                        this.distance+=29;
+                        return this.sendRequest();
                     }
 
                     var node=data.result[0];
